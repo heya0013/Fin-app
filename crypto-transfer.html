@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Finapp</title>
+    <meta name="description" content="Finapp HTML Mobile Template">
+    <meta name="keywords"
+        content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="__manifest.json">
+</head>
+
+<body>
+
+    <!-- loader -->
+    <div id="loader">
+        <img src="assets/img/loading-icon.png" alt="icon" class="loading-icon">
+    </div>
+    <!-- * loader -->
+
+    <!-- App Header -->
+    <div class="appHeader">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+            </a>
+        </div>
+        <div class="pageTitle">
+            Transfer
+        </div>
+        <div class="right">
+            <a href="#" class="headerButton" onclick="toastbox('toast-1', 2000)">
+                <ion-icon name="refresh"></ion-icon>
+            </a>
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- toast top -->
+    <div id="toast-1" class="toast-box toast-top tap-to-close bg-primary">
+        <div class="in">
+            <div class="text">
+                Exchange rates have been updated!
+            </div>
+        </div>
+    </div>
+    <!-- * toast top -->
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="action-sheet-content">
+                    <form>
+
+                        <div class="form-group basic mb-2">
+                            <div class="input-wrapper">
+                                <label class="label" for="walletaddress">Payer Address</label>
+                                <input type="email" class="form-control" id="payer"
+                                    placeholder="Enter a wallet address">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+                        <div class="form-group basic mb-2">
+                            <div class="input-wrapper">
+                                <label class="label" for="walletaddress">Payee Address</label>
+                                <input type="email" class="form-control" id="payee"
+                                    placeholder="Enter a wallet address">
+                                <i class="clear-input">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                </i>
+                            </div>
+                        </div>
+
+                        <div class="form-group basic">
+                            <div class="input-wrapper">
+                                <label class="label" for="sendAmount">Enter Amount</label>
+                                <div class="exchange-group small">
+                                    <div class="input-col">
+                                        <input type="text" class="form-control form-control-lg pe-0"
+                                            id="amount" placeholder="0" value="0" maxlength="14">
+                                    </div>
+                                    <div class="select-col">
+                                        <select class="form-select form-select-lg currency">
+                                            <option value="BTC" selected>Sepolia</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="ADA">ADA</option>
+                                            <option value="USDT">USDT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="transfer()"
+                                data-bs-dismiss="modal">Transfer</button>
+                        </div>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="transaction()"
+                                data-bs-dismiss="modal">Transactions</button>
+                        </div>
+                        <h4 class="caption">
+                            <div class="pageTitle">
+                            </div>
+                        </h4>
+                        <h4 class="caption">
+                            <p id="view_payer"></p>
+                            <p id="view_payee"></p>
+                            <p id="view_amount"></p>
+                        </h4>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+
+
+    <!-- ========= JS Files =========  -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script>
+        const contractAddress = "0x8a7a27a9908cb8c797f51df8eff6777cc4e72b64";
+        const contractABI = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "payer_add",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "payee_add",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amount_transfer",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "weixin",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "check_transaction",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+        const web3 = new Web3(Web3.givenProvider);
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+        async function transfer() {
+            const accounts = await web3.eth.requestAccounts();
+            const payer = document.getElementById('payer').value;
+            const payee = document.getElementById('payee').value;
+            const amount = document.getElementById('amount').value;
+            console.log(payer,payee,amount);
+            
+            console.log("accounts[0] " + accounts[0]);
+            await contract.methods.weixin(payer, payee,amount).send({ from: accounts[0]});
+        }
+        async function transaction() {
+            const result = await contract.methods.check_transaction().call();
+            document.getElementById('view_payer').innerText = "Payer: " + result[0];
+            document.getElementById('view_payee').innerText = "Payee: " + result[1];
+            document.getElementById('view_amount').innerText = "Amount: " + result[2];
+        }
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Apex Charts -->
+    <script src="assets/js/plugins/apexcharts/apexcharts.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script>
+
+</body>
+
+</html>

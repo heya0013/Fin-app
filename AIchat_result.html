@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>AI Chat Response</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- App Header -->
+    <div class="appHeader">
+        <div class="pageTitle">AI Chat Response</div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+        <div class="section mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="p-2">
+                        <h4 class="text-primary text-center"><i class="fas fa-robot"></i> AI Response</h4>
+                        <hr>
+                        <div class="alert alert-light" style="background-color: #f8f9fa; border-left: 5px solid #007bff;">
+                            <strong>🤖 AI:</strong> 
+                            <div style="line-height: 1.8; color: #333;">
+                                {% for line in r.split('*') if line.strip() %}
+                                    {% if '**' in line %}
+                                        <p><strong>{{ line.split('**')[1] }}:</strong> {{ line.split('**')[-1] }}</p>
+                                    {% else %}
+                                        <p>{{ line.strip() }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Chat Button -->
+        <div class="section mt-3 text-center">
+            <a href="/AIchat" class="btn btn-primary btn-lg">
+                <i class="fas fa-arrow-left"></i> Back to Chat
+            </a>
+        </div>
+
+    </div>
+    <!-- * App Capsule -->
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="/" class="item">
+            <div class="col">
+                <ion-icon name="home-outline"></ion-icon>
+                <strong>Home</strong>
+            </div>
+        </a>
+        <a href="/AIchat" class="item active">
+            <div class="col">
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                <strong>AI Chat</strong>
+            </div>
+        </a>
+        <a href="/cards" class="item">
+            <div class="col">
+                <ion-icon name="card-outline"></ion-icon>
+                <strong>My Cards</strong>
+            </div>
+        </a>
+        <a href="/crypto" class="item">
+            <div class="col">
+                <ion-icon name="logo-bitcoin"></ion-icon>
+                <strong>Crypto Wallet</strong>
+            </div>
+        </a>
+        <a href="/settings" class="item">
+            <div class="col">
+                <ion-icon name="settings-outline"></ion-icon>
+                <strong>Settings</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+    <!-- ========= JS Files =========  -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="assets/js/base.js"></script>
+
+</body>
+
+</html>
+
+
+
+
